@@ -1,3 +1,44 @@
-const SERVICE_ID   = "SEU_SERVICE_ID_AQUI";   // Copie do EmailJS
-const TEMPLATE_ID  = "SEU_TEMPLATE_ID_AQUI";  // Copie do template
-emailjs.init("SUA_PUBLIC_KEY_AQUI");         // Copie da conta
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class EmailJSTest {
+    public static void main(String[] args) {
+        try {
+            // URL da API do EmailJS
+            URL url = new URL("https://api.emailjs.com/api/v1.0/email/send");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+
+            // Troque pelos seus valores:
+            String serviceId = "service_xxxxxxx";
+            String templateId = "template_xxxxxxx";
+            String publicKey = "uHf84Sd6AbCdXyZ"; // Public Key
+
+            // JSON de envio
+            String json = "{"
+                    + "\"service_id\": \"" + serviceId + "\","
+                    + "\"template_id\": \"" + templateId + "\","
+                    + "\"user_id\": \"" + publicKey + "\","
+                    + "\"template_params\": {"
+                    + "    \"from_name\": \"Camila e Marcela\","
+                    + "    \"from_email\": \"teste@email.com\","
+                    + "    \"message\": \"Olá, este é um teste do EmailJS com Java!\""
+                    + "  }"
+                    + "}";
+
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(json.getBytes("UTF-8"));
+            }
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("Código de resposta: " + responseCode);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

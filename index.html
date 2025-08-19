@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contato via WhatsApp + E-mail</title>
+  <title>Contato - Sugestões, Reclamações ou Dúvidas</title>
 
   <!-- Biblioteca EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
@@ -21,7 +21,7 @@
       margin: 0;
     }
 
-    /* Formulário com fundo semitransparente */
+    /* Caixa do formulário */
     form {
       max-width: 450px;
       width: 100%;
@@ -34,12 +34,15 @@
     h2 {
       text-align: center;
       color: #d35400;
+      margin-bottom: 8px;
     }
 
     h3 {
       text-align: center;
+      font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 20px;
       color: #333;
-      font-weight: normal;
     }
 
     label {
@@ -54,7 +57,7 @@
       margin-top: 6px;
       border: 1px solid #ddd;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     button {
@@ -63,7 +66,7 @@
       font-weight: 700;
       border: none;
       cursor: pointer;
-      margin-top: 15px;
+      margin-top: 16px;
     }
 
     button:hover {
@@ -75,27 +78,30 @@
       display: block;
       text-align: center;
       margin-top: 10px;
+      font-size: 12px;
     }
   </style>
 
   <script>
-    (function(){ emailjs.init("Vv9xgfFONqlMmmUAg"); })(); // <- sua Public Key
+    // Inicializa EmailJS
+    (function(){
+      emailjs.init("Vv9xgfFONqlMmmUAg"); // <- coloque aqui sua Public Key
+    })();
   </script>
 </head>
 <body>
 
-  <form id="whatsappForm" novalidate>
-    <h2>QUEREMOS TE OUVIR!</h2>
+  <form id="contatoForm" novalidate>
+    <h2>Queremos te ouvir!</h2>
     <h3>Dúvidas, Sugestões ou Reclamações</h3>
-    <br>
 
-    <label>Nome</label>
+    <label>Nome *</label>
     <input type="text" id="nome" required placeholder="Seu nome" />
 
     <label>E-mail</label>
     <input type="email" id="email" placeholder="seu@email.com" />
 
-    <label>Categoria</label>
+    <label>Categoria *</label>
     <select id="categoria" required>
       <option value="">Selecione...</option>
       <option value="Dúvida">Dúvida</option>
@@ -103,39 +109,42 @@
       <option value="Reclamação">Reclamação</option>
     </select>
 
-    <label>Mensagem</label>
-    <textarea id="mensagem" rows="4" required placeholder="Como podemos ajudar?"></textarea>
+    <label>Mensagem *</label>
+    <textarea id="mensagem" rows="4" required placeholder="Escreva sua mensagem aqui..."></textarea>
 
     <button type="submit">Enviar pelo WhatsApp + E-mail</button>
     <small>Você será redirecionado ao WhatsApp e também enviaremos uma cópia para nosso e-mail.</small>
   </form>
 
   <script>
+    // CONFIGURAÇÕES
     const DESTINO_EMAIL = "arboratlanticatorre2@outlook.com"; // seu e-mail
-    const TELEFONE_WPP = "+5511961720428"; // seu WhatsApp
-    const SERVICE_ID   = "service_kvtq0ui";   // troque pelo seu Service ID
-    const TEMPLATE_ID  = "template_ulbmkmw";  // troque pelo seu Template ID
+    const TELEFONE_WPP  = "5511961720428"; // seu WhatsApp com DDD + 55
+    const SERVICE_ID    = "service_kvtq0ui";   // coloque aqui o Service ID
+    const TEMPLATE_ID   = "template_ulbmkmw";  // coloque aqui o Template ID
 
-    document.getElementById("whatsappForm").addEventListener("submit", async function(e){
+    // Captura envio do formulário
+    document.getElementById("contatoForm").addEventListener("submit", async function(e){
       e.preventDefault();
 
+      // Pega os valores
       const nome = document.getElementById("nome").value.trim();
       const email = document.getElementById("email").value.trim();
       const categoria = document.getElementById("categoria").value;
       const mensagem = document.getElementById("mensagem").value.trim();
 
       if(!nome || !categoria || !mensagem){
-        alert("Preencha todos os campos obrigatórios.");
+        alert("Preencha todos os campos obrigatórios (*)");
         return;
       }
 
-      // 1) Abre o WhatsApp
+      // --- 1) Abre o WhatsApp ---
       const textoWpp = encodeURIComponent(
         `Olá! Meu nome é ${nome}\nEmail: ${email || "não informado"}\nCategoria: ${categoria}\n\n${mensagem}`
       );
       window.open(`https://wa.me/${TELEFONE_WPP}?text=${textoWpp}`, "_blank");
 
-      // 2) Envia cópia por e-mail via EmailJS
+      // --- 2) Envia cópia por e-mail via EmailJS ---
       try {
         await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
           from_name: nome,
@@ -144,10 +153,10 @@
           message: mensagem,
           to_email: DESTINO_EMAIL
         });
-        alert("Cópia enviada por e-mail com sucesso!");
+        alert("✅ Cópia enviada para nosso e-mail com sucesso!");
       } catch(err){
         console.error(err);
-        alert("Não foi possível enviar a cópia por e-mail agora.");
+        alert("⚠ Não foi possível enviar a cópia por e-mail agora.");
       }
     });
   </script>

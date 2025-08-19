@@ -1,3 +1,4 @@
+/* Corpo com imagem de fundo */
 body {
   font-family: Arial, sans-serif;
   background: url('fundo.jpeg') no-repeat center center fixed;
@@ -9,6 +10,7 @@ body {
   margin: 0;
 }
 
+/* Caixa do formulário */
 form {
   max-width: 450px;
   width: 100%;
@@ -16,33 +18,81 @@ form {
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  animation: fadeIn 0.8s ease;
 }
 
-h2 { text-align: center; color: #d35400; }
+/* Títulos */
+h2 {
+  text-align: center;
+  color: #d35400;
+  margin-bottom: 8px;
+}
 
-label { font-weight: 600; margin-top: 10px; display: block; }
+h3 {
+  text-align: center;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+}
 
-input, textarea, button {
+/* Labels */
+label {
+  font-weight: 600;
+  margin-top: 10px;
+  display: block;
+}
+
+/* Campos */
+input, textarea, select {
   width: 100%;
   padding: 10px;
   margin-top: 6px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s ease;
 }
 
+input:focus, textarea:focus, select:focus {
+  border: 1px solid #d35400;
+}
+
+/* Botão */
 button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
   background: #25D366;
   color: #fff;
-  font-weight: 700;
-  border: none;
   cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease;
 }
 
-button:hover { opacity: 0.95; }
+button:hover {
+  background: #20b858;
+}
 
+button:active {
+  transform: scale(0.98);
+}
+
+/* Rodapé pequeno */
 small {
   color: #666;
   display: block;
   text-align: center;
   margin-top: 10px;
+  font-size: 12px;
+}
+
+/* Animação */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
