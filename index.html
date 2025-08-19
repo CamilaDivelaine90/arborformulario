@@ -36,18 +36,25 @@
       color: #d35400;
     }
 
+    h3 {
+      text-align: center;
+      color: #333;
+      font-weight: normal;
+    }
+
     label {
       font-weight: 600;
       margin-top: 10px;
       display: block;
     }
 
-    input, textarea, button {
+    input, textarea, select, button {
       width: 100%;
       padding: 10px;
       margin-top: 6px;
       border: 1px solid #ddd;
       border-radius: 8px;
+      font-size: 15px;
     }
 
     button {
@@ -56,6 +63,7 @@
       font-weight: 700;
       border: none;
       cursor: pointer;
+      margin-top: 15px;
     }
 
     button:hover {
@@ -71,15 +79,16 @@
   </style>
 
   <script>
-    (function(){ emailjs.init("Vv9xgfFONqlMmmUAg"); })(); // <- cole sua Public Key
+    (function(){ emailjs.init("Vv9xgfFONqlMmmUAg"); })(); // <- sua Public Key
   </script>
 </head>
 <body>
 
   <form id="whatsappForm" novalidate>
-    <h2> QUEREMOS TE OUVIR  ! </h2> <center><h3>Dúvidas, Sugestões ou Reclamações</h3></center>
-<br>
-<br>
+    <h2>QUEREMOS TE OUVIR!</h2>
+    <h3>Dúvidas, Sugestões ou Reclamações</h3>
+    <br>
+
     <label>Nome</label>
     <input type="text" id="nome" required placeholder="Seu nome" />
 
@@ -98,7 +107,7 @@
     <textarea id="mensagem" rows="4" required placeholder="Como podemos ajudar?"></textarea>
 
     <button type="submit">Enviar pelo WhatsApp + E-mail</button>
-    <small>Você será redirecionado ao WhatsApp e também enviaremos uma cópia para nosso e-mail. Em breve sua solicitação será respondida.</small>
+    <small>Você será redirecionado ao WhatsApp e também enviaremos uma cópia para nosso e-mail.</small>
   </form>
 
   <script>
@@ -145,20 +154,3 @@
 
 </body>
 </html>
-
-<!-- "service_kvtq0ui",
- "template_ulbmkmw" -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
