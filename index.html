@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contato via WhatsApp + E-mail</title>
+
+  <!-- Biblioteca EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+
+  <style>
+    /* Fundo com imagem */
+    body {
+      font-family: Arial, sans-serif;
+      background: url('fundo.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* Formulário com fundo semitransparente */
+    form {
+      max-width: 450px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #d35400;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    button {
+      background: #25D366;
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.95;
+    }
+
+    small {
+      color: #666;
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+
+  <script>
+    (function(){ emailjs.init("Vv9xgfFONqlMmmUAg"); })(); // <- cole sua Public Key
+  </script>
+</head>
+<body>
+
+  <form id="whatsappForm" novalidate>
+    <h2> QUEREMOS TE OUVIR  ! </h2> <center><h3>Dúvidas, Sugestões ou Reclamações</h3></center>
+<br>
+<br>
+    <label>Nome</label>
+    <input type="text" id="nome" required placeholder="Seu nome" />
+
+    <label>E-mail</label>
+    <input type="email" id="email" placeholder="seu@email.com" />
+
+    <label>Categoria</label>
+    <select id="categoria" required>
+      <option value="">Selecione...</option>
+      <option value="Dúvida">Dúvida</option>
+      <option value="Sugestão">Sugestão</option>
+      <option value="Reclamação">Reclamação</option>
+    </select>
+
+    <label>Mensagem</label>
+    <textarea id="mensagem" rows="4" required placeholder="Como podemos ajudar?"></textarea>
+
+    <button type="submit">Enviar pelo WhatsApp + E-mail</button>
+    <small>Você será redirecionado ao WhatsApp e também enviaremos uma cópia para nosso e-mail. Em breve sua solicitação será respondida.</small>
+  </form>
+
+  <script>
+    const DESTINO_EMAIL = "arboratlanticatorre2@outlook.com"; // seu e-mail
+    const TELEFONE_WPP = "+5511961720428"; // seu WhatsApp
+    const SERVICE_ID   = "service_kvtq0ui";   // troque pelo seu Service ID
+    const TEMPLATE_ID  = "template_ulbmkmw";  // troque pelo seu Template ID
+
+    document.getElementById("whatsappForm").addEventListener("submit", async function(e){
+      e.preventDefault();
+
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const categoria = document.getElementById("categoria").value;
+      const mensagem = document.getElementById("mensagem").value.trim();
+
+      if(!nome || !categoria || !mensagem){
+        alert("Preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      // 1) Abre o WhatsApp
+      const textoWpp = encodeURIComponent(
+        `Olá! Meu nome é ${nome}\nEmail: ${email || "não informado"}\nCategoria: ${categoria}\n\n${mensagem}`
+      );
+      window.open(`https://wa.me/${TELEFONE_WPP}?text=${textoWpp}`, "_blank");
+
+      // 2) Envia cópia por e-mail via EmailJS
+      try {
+        await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+          from_name: nome,
+          from_email: email || "nao_informado@exemplo.com",
+          category: categoria,
+          message: mensagem,
+          to_email: DESTINO_EMAIL
+        });
+        alert("Cópia enviada por e-mail com sucesso!");
+      } catch(err){
+        console.error(err);
+        alert("Não foi possível enviar a cópia por e-mail agora.");
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+<!-- "service_kvtq0ui",
+ "template_ulbmkmw" -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
